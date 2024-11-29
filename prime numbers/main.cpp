@@ -6,24 +6,22 @@
 void prime_finder(const uint64_t limit)
 {
     std::chrono::time_point<std::chrono::system_clock> start;
-
     start = std::chrono::system_clock::now();
-    
     std::vector<bool> prime(limit, true);
     //for (long i = 0; i < m_Limit; i++)
     //    prime.push_back(true);
-        
-    if (prime[2])
-    {
-        for (long i = 2 * 2; i < limit + 1; i += 2)
-            prime[i] = false;
-    }
     
-    if (prime[3])
-    {
-        for (long i = 2 * 3; i < limit + 1; i += 3)
-            prime[i] = false;
-    }
+    std::fstream file;
+    file.open("/Users/nathan/Downloads/Primes.txt", std::fstream::out);
+    
+    file << "2\n 3\n";
+    
+    
+    for (long i = 2 * 2; i < limit + 1; i += 2)
+        prime[i] = false;
+    
+    for (long i = 2 * 3; i < limit + 1; i += 3)
+        prime[i] = false;
     
     uint64_t p = 5;
     
@@ -31,6 +29,7 @@ void prime_finder(const uint64_t limit)
     {
         if (prime[p])
         {
+            file << p << "\n";
             for (long i = 2 * p; i < limit + 1; i += p)
                 prime[i] = false;
         }
@@ -39,6 +38,7 @@ void prime_finder(const uint64_t limit)
         
         if (prime[p])
         {
+            file << p << "\n";
             for (long i = 2 * p; i < limit + 1; i += p)
                 prime[i] = false;
         }
@@ -53,34 +53,23 @@ void prime_finder(const uint64_t limit)
     //        std::cout << j << std::endl;
     //}
     
-    std::chrono::time_point<std::chrono::system_clock> firstPart = std::chrono::system_clock::now();
+    //std::chrono::time_point<std::chrono::system_clock> firstPart = std::chrono::system_clock::now();
     
-    auto elapsedSeconds = firstPart - start;
+    //auto elapsedSeconds = firstPart - start;
      
-    std::cout << "Elapsed time for first part: " << (elapsedSeconds.count())/1000000.0f << "s\n";
+    //std::cout << "Elapsed time for first part: " << (elapsedSeconds.count())/1000000.0f << "s\n";
     
-    std::fstream file;
-    file.open("/Users/nathan/Downloads/Primes.txt", std::fstream::out);
-    
-    file << "2\n 3\n";
-    
-    for (int j = 5; j < limit + 1; j += 4)
-    {
-        if (prime[j])
-            file << j << "\n";
-        
-        j += 2;
-        
-        if (prime[j])
-            file << j << "\n";
-    }
+//    for (int j = 5; j < limit + 1; j += 4)
+//    {
+//        if (prime[j])
+//            file << j << "\n";
+//        
+//        j += 2;
+//        
+//        if (prime[j])
+//            file << j << "\n";
+//    }
     file.close();
-    
-    std::chrono::time_point<std::chrono::system_clock> secondPart = std::chrono::system_clock::now();
-    
-    elapsedSeconds = secondPart - firstPart;
-     
-    std::cout << "Elapsed time for second part: " << (elapsedSeconds.count())/1000000.0f << "s\n";
 }
 
 int main(void)
